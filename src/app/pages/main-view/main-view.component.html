@@ -1,41 +1,51 @@
 <div class="root">
-    <div class="navbar has-background-dark">
-      <div class="navbar-brand">
-        <div class="navbar-item">
-          <h1 class="app-name has-gradient-text">Kanban</h1>
-        </div>
+  <div class="navbar has-background-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <h1 class="app-name has-gradient-text">Kanban</h1>
       </div>
     </div>
-  
-    <div class="board">
-  
-      <div class="board-bar">
-        <p class="board-name">{{ board.name }}</p>
+  </div>
+
+  <div class="board">
+
+    <div class="board-bar">
+      <span *ngIf="!editingBoardName" class="board-name">{{ board.name }}</span>
+      <input *ngIf="editingBoardName" class="board-name" type="text" [(ngModel)]="board.name" (blur)="stopEditing()">
+      <div *ngIf="!editingBoardName" (click)="startEditing()" class="edit-icon">
+        <img style="height: 15px;" src="assets/rename.svg" alt="edit icon">
       </div>
-  
-      <div class="board-wrapper">
-  
-        <div class="board-columns" cdkDropListGroup>
-          <div class="board-column" *ngFor="let column of board.columns">
-  
+    </div>
+
+    <div class="add-column-container">
+      <input [(ngModel)]="newColumnName" class="add-column-input" type="text" placeholder="New column name">
+      <button (click)="addColumn()" class="add-column-button">Add</button>
+    </div>
+
+    <div class="board-wrapper">
+      <div class="board-columns" cdkDropListGroup>
+        <div class="board-column" *ngFor="let column of board.columns; let columnIndex = index">
+          <div class="delete-icon" (click)="deleteColumn(column, columnIndex)">
+            <img style="height: 15px;" src="assets/delete.svg" alt="Cancel icon">
+          </div>
+          <div class="column-header">
             <div class="column-title">
               {{ column.columnName }}
             </div>
-  
-            <div class="tasks-container"
-            cdkDropList
-            [cdkDropListData]="column.tasks"
-            (cdkDropListDropped)="drop($event)">
-              <div class="task" *ngFor="let item of column.tasks" cdkDrag>
-                {{ item }}
+          </div>
+          <div class="tasks-container" cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
+            <div class="task" *ngFor="let item of column.tasks; let taskIndex = index" cdkDrag>
+              {{ item }}
+              <div class="cancel-icon" (click)="deleteItem(columnIndex, taskIndex)">
+                <img style="height: 13px;" src="assets/times-white.svg" alt="Cancel icon">
               </div>
             </div>
           </div>
-  
         </div>
-  
       </div>
-  
+
     </div>
-  
+
   </div>
+
+</div>

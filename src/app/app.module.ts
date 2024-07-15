@@ -17,7 +17,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    CommonModule,
+    CommonModule, 
     DragDropModule,
     RouterModule.forRoot(routes)
   ],
