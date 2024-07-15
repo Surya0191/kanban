@@ -1,6 +1,6 @@
 # Kanban
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
+This project uses Angular 18 and integrates the drag-and-drop module from Angular CDK using the Drag&Drop connected sorting group method. Kanban is a visual management system that helps teams visualize their work, manage their workflow, and improve efficiency.
 
 ## Development server
 
