@@ -1,0 +1,20 @@
+<div class="modal" [ngClass]="{'is-active': isActive}">
+    <div class="modal-background" (click)="closeModal()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add Task</p>
+            <button class="delete" aria-label="close" (click)="closeModal()"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field">
+                <label class="label">Enter your text:</label>
+                <div class="control">
+                    <textarea class="textarea" rows="3" [(ngModel)]="task"></textarea>
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-primary" (click)="addTask()" [disabled]="task === ''">Add</button>
+        </footer>
+    </div>
+</div>

@@ -4,17 +4,53 @@
     height: 100%;
 }
 
-.app-name {
-    font-size: 28px;
-    font-family: 'Lato', sans-serif;
-    font-weight: bold;
+.navbar .navbar-brand .navbar-item {
+    display: flex;
+    align-items: center;
 }
 
-.has-gradient-text {
-    background: -webkit-linear-gradient(#13f7f4, #2af598);
+.kanban-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.brand-container {
+    text-align: center;
+}
+
+.app-name {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ff6b6b, #f9ca24);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin: 0;
 }
+
+.tagline {
+    font-size: 0.875rem;
+    color: #ffffff;
+    margin-top: -0.5rem;
+    padding-bottom:0.2rem ;
+}
+
+.has-background-dark {
+    background-color: #363636;
+}
+
+
+// .app-name {
+//     font-size: 28px;
+//     font-family: 'Lato', sans-serif;
+//     font-weight: bold;
+// }
+
+// .has-gradient-text {
+//     background: -webkit-linear-gradient(#13f7f4, #2af598);
+//     -webkit-background-clip: text;
+//     -webkit-text-fill-color: transparent;
+// }
 
 
 .board {
@@ -31,7 +67,7 @@
         background: rgba(gray, 0.5);
         padding: 8px 15px;
         display: flex;
-        justify-content:center;
+        justify-content: center;
 
         .board-name {
             font-size: 20px;
@@ -39,7 +75,7 @@
             color: #5c2c2c;
         }
 
-        .edit-icon{
+        .edit-icon {
             cursor: pointer;
             padding: 2px 7px;
         }
@@ -72,10 +108,16 @@
                     margin-left: 0;
                 }
 
-                .delete-icon {
+                .column-icons-wrapper {
                     cursor: pointer;
                     display: flex;
                     flex-direction: row-reverse;
+
+                    .column-icon {
+                        height: 15px;
+                        cursor: pointer;
+                        margin: 0px 4px;
+                    }
                 }
 
                 .column-header {
@@ -115,14 +157,14 @@
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.05),
         0 3px 14px 2px rgba(0, 0, 0, 0.05);
 
-        .cancel-icon{
-            cursor: pointer;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-            padding: 2px;
-        }
+    .cancel-icon {
+        cursor: pointer;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        padding: 2px;
+    }
 }
 
 .cdk-drag-preview {
@@ -151,26 +193,26 @@
     margin: 10px 0;
     width: 20%;
     align-self: flex-end;
-  }
-  
-  .add-column-input {
+}
+
+.add-column-input {
     padding: 8px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     flex-grow: 1;
-  }
-  
-  .add-column-button {
+}
+
+.add-column-button {
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #087584;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .add-column-button:hover {
+    margin: 5px;
+}
+
+.add-column-button:hover {
     background-color: #0056b3;
-  }
-  
+}

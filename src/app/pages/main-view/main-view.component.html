@@ -2,7 +2,10 @@
   <div class="navbar has-background-dark">
     <div class="navbar-brand">
       <div class="navbar-item">
-        <h1 class="app-name has-gradient-text">Kanban</h1>
+        <div class="brand-container">
+          <h1 class="app-name has-gradient-text">Kanban</h1>
+          <p class="tagline">Visual Board</p>
+        </div>
       </div>
     </div>
   </div>
@@ -24,9 +27,11 @@
 
     <div class="board-wrapper">
       <div class="board-columns" cdkDropListGroup>
-        <div class="board-column" *ngFor="let column of board.columns; let columnIndex = index">
-          <div class="delete-icon" (click)="deleteColumn(column, columnIndex)">
-            <img style="height: 15px;" src="assets/delete.svg" alt="Cancel icon">
+        <div class="board-column" *ngFor="let column of board.columns; let columnIndex = index"> 
+          <div class="column-icons-wrapper">
+            <img class="column-icon" src="assets/delete.svg" alt="Delete icon" (click)="deleteColumn(columnIndex)">
+            <img class="column-icon" src="assets/add.svg" alt="add icon" (click)="openTaskModal(columnIndex)">
+            <app-task-modal [isActive]="isModalActive" [columnIndex] = "modalColumnIndex" (close)="closeModal($event)"></app-task-modal>
           </div>
           <div class="column-header">
             <div class="column-title">
@@ -36,7 +41,7 @@
           <div class="tasks-container" cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
             <div class="task" *ngFor="let item of column.tasks; let taskIndex = index" cdkDrag>
               {{ item }}
-              <div class="cancel-icon" (click)="deleteItem(columnIndex, taskIndex)">
+              <div class="cancel-icon" (click)="deleteItem(columnIndex, taskIndex)"> 
                 <img style="height: 13px;" src="assets/times-white.svg" alt="Cancel icon">
               </div>
             </div>

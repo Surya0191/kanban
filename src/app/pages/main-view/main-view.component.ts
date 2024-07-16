@@ -1,89 +1,70 @@
 import { Component, OnInit } from "@angular/core";
 import {
-  CdkDrag,
   CdkDragDrop,
-  CdkDropList,
-  CdkDropListGroup,
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { Board } from "src/app/models/board.model";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-
+import { BsModalRef } from "ngx-bootstrap/modal";
+import { Column } from "src/app/models/column.model";
+import { MainViewService } from "src/app/main-view.service";
 
 @Component({
   selector: "app-main-view",
   templateUrl: "./main-view.component.html",
   styleUrls: ["./main-view.component.scss"],
-  standalone: true,
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag,CommonModule,FormsModule]
 })
 export class MainViewComponent implements OnInit {
-  constructor() {}
+  isModalActive: boolean = false;
+  modalColumnIndex: number = 0;
+  editingBoardName: boolean = false;
+  newColumnName: string = "";
+  bsModalRef?: BsModalRef;
 
-  editingBoardName:boolean=false;
-  newColumnName:string = '';
+  constructor(private mainViewService: MainViewService) {}
 
-  board: Board = {
-    name: "Test Board",
-    columns: [
-      {
-        columnName: "Ideas",
-        tasks: [
-          "Some random idea",
-          "This is another random idea",
-          "build an awesome application",
-        ],
-      },
-      {
-        columnName: "Research",
-        tasks: ["Lorem ipsum", "foo", "This was in the 'Research' column"],
-      },
-      {
-        columnName: "Todo",
-        tasks: ["Get to work", "Pick up groceries", "Go home", "Fall asleep"],
-      },
-      {
-        columnName: "Done",
-        tasks: [
-          "Get up",
-          "Brush teeth",
-          "Take a shower",
-          "Check e-mail",
-          "Walk dog",
-        ],
-      },
-    ],
-  };
+  board: Board = this.mainViewService.getBoard();
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mainViewService.boardUpdated.subscribe((board: Board) => {
+      this.board = board;
+    });
+  }
 
   addColumn() {
-    if (this.newColumnName.trim()) {
-      const newColumn = { columnName: this.newColumnName, tasks: [] };
-      this.board.columns.unshift(newColumn);;
-      this.newColumnName = '';
-    }
+    this.mainViewService.addColumn(this.newColumnName);
+    this.newColumnName = "";
   }
 
-  deleteColumn(column: any, columnIndex:number) {
-    if (columnIndex !== -1) {
-      this.board.columns.splice(columnIndex, 1);
-    }
+  deleteColumn(columnIndex: number) {
+    this.mainViewService.deleteColumn(columnIndex);
   }
 
-  deleteItem(columnIndex:number, taskIndex:number){
-    if (columnIndex !== -1 && taskIndex !== -1) {
-      this.board.columns[columnIndex].tasks.splice(taskIndex, 1);
-    }
+  deleteItem(columnIndex: number, taskIndex: number) {
+    this.mainViewService.deleteTask(columnIndex,taskIndex);
   }
 
-  startEditing(){
+  openTaskModal(columnIndex: number) {
+    this.isModalActive = true;
+    this.modalColumnIndex = columnIndex;
+  }
+
+  closeModal(modalData: {
+    isClose: boolean;
+    task: string;
+    columnIndex: number;
+  }) {
+    if (!modalData.isClose) {
+      this.mainViewService.addTask(modalData);
+    }
+    this.isModalActive = false;
+  }
+
+  startEditing() {
     this.editingBoardName = true;
   }
 
-  stopEditing(){
+  stopEditing() {
     this.editingBoardName = false;
   }
 
